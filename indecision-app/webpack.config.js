@@ -16,5 +16,10 @@ module.exports = {
             test: /\.js$/,
             exclude: /node_modules/
         }]
+    },
+    //use this for better debugging - actually shows source map of where the error is(which component)
+    devtool: 'cheap-module-eval-source-map',
+    devServer: {
+        contentBase: path.join(__dirname, 'public'),
     }
 }

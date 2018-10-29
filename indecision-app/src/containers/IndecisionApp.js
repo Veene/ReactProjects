@@ -6,16 +6,10 @@ import Header from '../../src/components/Header'
 import Action from '../../src/components/Action'
 
 class IndecisionApp extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            options: []
-        }
-        this.handleDeleteOptions = this.handleDeleteOptions.bind(this)
-        this.handleButton = this.handleButton.bind(this)
-        this.handleAddOptions = this.handleAddOptions.bind(this)
-        this.handleDeleteOptionSingle = this.handleDeleteOptionSingle.bind(this)
+    state = {
+        options: []
     }
+    
     componentDidMount() {
         try {
             const json = localStorage.getItem('options')
@@ -47,10 +41,10 @@ class IndecisionApp extends React.Component {
         console.log('componentWillUnmount')
     }
     //handleDeleteOptions
-    handleDeleteOptions(){
+    handleDeleteOptions = () => {
         this.setState((prevState) => ({ options: [] }));
     }
-    handleDeleteOptionSingle(optionToRemove){
+    handleDeleteOptionSingle = (optionToRemove) => {
         console.log('HDOSINGLE', optionToRemove)
         this.setState((prevState)=> {
             return {
@@ -60,11 +54,11 @@ class IndecisionApp extends React.Component {
             }
         })
     }
-    handleButton() {
+    handleButton = () => {
         let randomIndex = Math.floor(Math.random()*this.state.options.length)
         alert(this.state.options[randomIndex])
     }
-    handleAddOptions(option){
+    handleAddOptions = (option) => {
         if(!option) {
             return 'Enter valid value to add item'
             console.log('Enter valid value to add item')

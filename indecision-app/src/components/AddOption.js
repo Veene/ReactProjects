@@ -1,15 +1,10 @@
 import React from 'react';
 
 class AddOption extends React.Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            error: undefined
-        }
-
-        this.handleOnSubmit=this.handleOnSubmit.bind(this)
+    state = {
+        error: undefined
     }
-    handleOnSubmit(e) {
+    handleOnSubmit= (e) => {
         //remember to prevent default on submits which refresh full page
         e.preventDefault();
         const option = e.target.option1.value.trim();

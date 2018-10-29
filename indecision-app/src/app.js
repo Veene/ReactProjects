@@ -4,12 +4,10 @@ import ReactDOM from 'react-dom';
 import IndecisionApp from '../src/containers/IndecisionApp'
 
 class App extends React.Component {
-    render(){
+    render() {
         return <IndecisionApp />
     }
 }
-
-
 ReactDOM.render(<App />, document.getElementById('app'))
 
 
