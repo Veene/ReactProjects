@@ -15,6 +15,13 @@ module.exports = {
             loader: 'babel-loader',
             test: /\.js$/,
             exclude: /node_modules/
+        }, {
+            test: /\.s?css$/,
+            use: [
+                'style-loader',
+                'css-loader',
+                'sass-loader'
+            ]
         }]
     },
     //use this for better debugging - actually shows source map of where the error is(which component)
