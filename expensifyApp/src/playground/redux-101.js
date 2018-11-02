@@ -1,19 +1,23 @@
 import { createStore } from 'redux';
 
 //action-generators
-const incrementCount = (payload={}) => {
+const incrementCount = ({ incrementBy=1 }={}) => {
     return {
         type: 'INCREMENT', 
-        incrementBy: typeof payload.incrementBy === 'number' ? payload.incrementBy : 1
+        incrementBy
     } 
 }
-const decrementCount = (payload) => {
-    return {
-        type: 'DECREMENT',
-        decrementBy: payload
-    }
-}
-const resetCount = () => ({type: 'RESET'})
+const decrementCount = ({ decrementBy=1 }={}) => ({
+    type: 'DECREMENT',
+    decrementBy
+})
+const resetCount = () => ({
+    type: 'RESET'
+})
+const setCount = ({ count }) => ({
+    type: 'SET', 
+    count
+})
 
 
 const store = createStore((state={ count: 0 }, action) => {
@@ -25,6 +29,8 @@ const store = createStore((state={ count: 0 }, action) => {
             return {count : state.count - decrementBy}
         case 'RESET':
             return {count : 0}
+        case 'SET':
+            return {count : action.count}
         default:
             return state
     }
@@ -36,6 +42,7 @@ const unsubscribe = store.subscribe(() => {
 store.dispatch(incrementCount({incrementBy: 5}));
 // unsubscribe(); --> Just run this to stop subscribe similar to how you stop setInterval
 store.dispatch(incrementCount());
-store.dispatch({type: 'RESET'})
-store.dispatch(decrementCount(10))
+store.dispatch(resetCount())
+store.dispatch(decrementCount({decrementBy: 10}))
+store.dispatch(setCount({ count:101 }))
 
