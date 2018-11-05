@@ -1,13 +1,23 @@
 import React from 'react';
+import moment from 'moment';
+import { SingleDatePicker } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import 'react-dates/initialize';
+
+// const date = new Date();
+const now = moment();
+console.log(now.format('MMM Do YYYY'));
 
 class ExpenseForm extends React.Component {
     state = {
         description: '',
         note: '',
-
+        amount: '',
+        createdAt: moment(),
+        calendarFocused: false,
+        error: '',
     }
     onDescriptionChange = (e) => {
-        console.log(e.target.value)
         const description = e.target.value;
         this.setState(() => {
             return {
@@ -16,7 +26,6 @@ class ExpenseForm extends React.Component {
         })
     }
     onNoteChange = (e) => {
-        console.log(e.target.value)
         const note = e.target.value;
         this.setState(() => {
             return {
@@ -24,10 +33,43 @@ class ExpenseForm extends React.Component {
             }
         })
     }
+    onAmountChange = (e) => {
+        const amount = e.target.value;
+        if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
+            this.setState(()=>({ amount }))
+        }
+    }
+    onDateChange = (createdAt) => {
+        if(createdAt) {
+            this.setState(() => ({ createdAt: createdAt }))
+        }
+        
+    }
+    onFocusChange = ({ focused }) => {
+        this.setState(() => ({ calendarFocused: focused }))
+    }
+    onSubmit = (e) => {
+        e.preventDefault();
+        if(!this.state.description || !this.state.amount){
+            //Set error state = to 'Please provide description and amount'
+            this.setState(() => ({ error: 'Please provide description and amount'}))
+        } else {
+            //Clear the error
+            this.setState(() => ({ error: '' }))
+            console.log('submitted')
+            this.props.onSubmit({
+                description: this.state.description,
+                amount: parseFloat(this.state.amount, 10) * 100, //formatted to remove the .(dots) and make it in cents instead
+                createdAt: this.state.createdAt.valueOf(),
+                note: this.state.note
+            });
+        }
+    }
     render() {
         return (
             <div>
-                <form >
+                {this.state.error ? this.state.error : null}
+                <form onSubmit={this.onSubmit}>
                     <input 
                       type='text'
                       placeholder="Description"
@@ -35,8 +77,18 @@ class ExpenseForm extends React.Component {
                       value={this.state.description}
                       onChange={this.onDescriptionChange}/>
                     <input 
-                      type='number'
-                      placeholder="Amount" />
+                      type='text'
+                      placeholder="Amount"
+                      value={this.state.amount}
+                      onChange={this.onAmountChange} />
+
+                      <SingleDatePicker
+                        date={this.state.createdAt}
+                        onDateChange={this.onDateChange}
+                        focused={this.state.calendarFocused}
+                        onFocusChange={this.onFocusChange}
+                        numberOfMonths={1}
+                        isOutsideRange={() => false} />
                     <textarea 
                       placeholder="Add a note for your expense (optional)"
                       value={this.state.note}
