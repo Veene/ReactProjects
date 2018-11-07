@@ -20,7 +20,7 @@ test('should setup edit expense action object', () => {
 test('should setup add expense action object with provided values', () => {
     const expenseData = {
         description: 'Rent',
-        amount: 109500,
+        amount: 109501,
         createdAt: 1000,
         note: 'this was last months rent'
     }
