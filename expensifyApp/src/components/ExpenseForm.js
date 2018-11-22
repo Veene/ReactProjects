@@ -41,19 +41,18 @@ class ExpenseForm extends React.Component {
         if(!amount || amount.match(/^\d{1,}(\.\d{0,2})?$/)) {
             this.setState(()=>({ amount }))
         }
-    }
+    };
     onDateChange = (createdAt) => {
         if(createdAt) {
             this.setState(() => ({ createdAt: createdAt }))
         }
-        
-    }
+    };
     onFocusChange = ({ focused }) => {
         this.setState(() => ({ calendarFocused: focused }))
-    }
+    };
     onSubmit = (e) => {
         e.preventDefault();
-        
+
         if(!this.state.description || !this.state.amount){
             //Set error state = to 'Please provide description and amount'
             this.setState(() => ({ error: 'Please provide description and amount'}))
