@@ -40,7 +40,7 @@ module.exports = (env) => {
             })
         ],
         //use this for better debugging - actually shows source map of where the error is(which component)
-        devtool: isProduction ? 'source-map' : 'cheap-module-eval-source-map',
+        devtool: isProduction ? 'source-map' : 'inline-source-map',
         devServer: {
             contentBase: path.join(__dirname, 'public'),
             historyApiFallback: true
