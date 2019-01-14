@@ -1,11 +1,14 @@
-// import _ from 'lodash'
+import _ from 'lodash'
 import jsonPlaceholder from '../apis/jsonPlaceholder'
 
 export const fetchPostsAndUsers = () => async (dispatch, getState) => {
   // console.log('about to fetch posts')
   await dispatch(fetchPosts())
   // console.log('fetched posts')
-  console.log(getState().posts)
+  //BELOW - getState().posts was generating the full 100 posts. With lodash, we mapped through the 100 and only pulled the userId, and then with uniq we grabbed unique values only, so the 1-10, instead of the 10x10(each author had 10 posts)
+  const userIds = _.uniq(_.map(getState().posts, 'userId'))
+  // console.log(userIds)
+  userIds.forEach(id => dispatch(fetchUser(id)))
 }
 
 export const fetchPosts = () => async (dispatch) => {
