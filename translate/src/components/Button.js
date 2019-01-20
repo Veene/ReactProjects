@@ -9,12 +9,12 @@ class Button extends React.Component {
     //collecting value from App (LanguageContext.Provider) and the value is linked to App's state language. when that state changes, it changes here
     console.log(this.context)
     //text changes based on this.context which changes based on the languagecontext.Provider
-    const text = this.context === 'english' ? 'Submit' : 'Voorleggenn'
+    // const text = this.context.language === 'english' ? 'Submit' : 'Voorleggenn'
     return (
       
       <button className="ui button primary">
         <LanguageContext.Consumer>
-          {(value) => value === 'english' ? 'Submit' : 'Voorleggen'}
+          {({ language }) => language === 'english' ? 'Submit' : 'Voorleggen'}
         </LanguageContext.Consumer>
       </button>
     )

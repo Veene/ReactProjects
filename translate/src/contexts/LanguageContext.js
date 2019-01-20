@@ -1,5 +1,21 @@
 import React from 'react'
 
-//default value for the context object is the string english needs to be passed into the cONtext obj create
-//default value can be any JS value, array, obj etc
-export default React.createContext('english')
+
+const Context = React.createContext('english')
+
+export class LanguageStore extends React.Component {
+  state = {
+    language: 'english'
+  }
+  onLanguageChange = (language) => {
+    this.setState({ language })
+  }
+  render() {
+    return (
+      <Context.Provider value={ { ...this.state, onLanguageChange: this.onLanguageChange } }>
+        {this.props.children}
+      </Context.Provider>
+    )
+  }
+}
+export default Context
